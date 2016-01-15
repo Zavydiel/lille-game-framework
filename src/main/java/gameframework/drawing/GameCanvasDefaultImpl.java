@@ -10,9 +10,12 @@ import java.awt.event.KeyListener;
 public class GameCanvasDefaultImpl implements GameCanvas {
 
 	protected final Canvas canvas;
+	
+	protected final InputManager inputManager;
 
 	public GameCanvasDefaultImpl() {
 		canvas = new Canvas();
+		inputManager = new InputManager(canvas);
 	}
 
 	@Override
