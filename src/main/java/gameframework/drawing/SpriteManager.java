@@ -53,5 +53,14 @@ public interface SpriteManager {
 	 * @see #increment()
 	 */
 	void setIncrement(int increment);
-
+	
+	/**
+	 * Do a horizontal flip on the image
+	 */
+	void horizontalFlip();
+	
+	/**
+	 * Do a vertical flip on the image
+	 */
+	void verticalFlip();
 }

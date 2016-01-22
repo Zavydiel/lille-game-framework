@@ -48,6 +48,10 @@ public class DrawableImage implements Drawable {
 	public Image getImage() {
 		return image;
 	}
+	
+	public void setImage(Image image) {
+		this.image = image;
+	}
 
 	@Override
 	public void draw(Graphics graphics) {

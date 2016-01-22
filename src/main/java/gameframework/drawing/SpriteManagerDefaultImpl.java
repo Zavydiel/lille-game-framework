@@ -1,7 +1,12 @@
 package gameframework.drawing;
 
 import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.Point;
+import java.awt.geom.AffineTransform;
+import java.awt.image.AffineTransformOp;
+import java.awt.image.BufferedImage;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -77,5 +82,41 @@ public class SpriteManagerDefaultImpl implements SpriteManager {
 	@Override
 	public void setIncrement(int increment) {
 		this.spriteNumber = increment;
+	}
+	
+	@Override
+	public void horizontalFlip(){
+		AffineTransform affineTransform = AffineTransform.getScaleInstance(-1, 1);
+		BufferedImage bufferedImage = toBufferedImage(image.getImage());
+		affineTransform.translate(-bufferedImage.getWidth(null), 0);
+		AffineTransformOp op = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		bufferedImage = op.filter(bufferedImage, null);
+		image.setImage(bufferedImage);
+	}
+	
+	@Override
+	public void verticalFlip(){
+		AffineTransform affineTransform = AffineTransform.getScaleInstance(1, -1);
+		BufferedImage bufferedImage = toBufferedImage(image.getImage());
+		affineTransform.translate(0, -bufferedImage.getHeight(null));
+		AffineTransformOp op = new AffineTransformOp(affineTransform, AffineTransformOp.TYPE_NEAREST_NEIGHBOR);
+		bufferedImage = op.filter(bufferedImage, null);
+		image.setImage(bufferedImage);
+	}
+	
+	protected BufferedImage toBufferedImage(Image image){
+	    if (image instanceof BufferedImage){
+	        return (BufferedImage) image;
+	    }
+
+	    // Create a buffered image with transparency
+	    BufferedImage bufferedImage = new BufferedImage(image.getWidth(null), image.getHeight(null), BufferedImage.TYPE_INT_ARGB);
+
+	    // Draw the image on to the buffered image
+	    Graphics2D graphics = bufferedImage.createGraphics();
+	    graphics.drawImage(image, 0, 0, null);
+	    graphics.dispose();
+
+	    return bufferedImage;
 	}
 }
